@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-__author__ = 'Eduard Balantsev'
-__project__ = 'MathTrainer'
+__author__: str = 'Eduard Balantsev'
+__project__: str = 'MathTrainer'
 
 import io
 import random
@@ -58,7 +58,7 @@ class TaskMaker(object):
         changed = False
         self.first = self.simple_set
         self.second = self.simple_set
-        name = raw_input('Enter learner name: 1-Timur or 2-Arina or (Guest) or name ')
+        name = input('Enter learner name: 1-Timur or 2-Arina or (Guest) or name ')
         if len(name) == 1:
             if type(self.name_learner[name]) is not None:
                 self.learner = self.name_learner[name]
@@ -66,11 +66,11 @@ class TaskMaker(object):
         elif len(name) > 1:
             self.learner = name
             changed = True
-        quality = raw_input('Choose quality of test (1-simple) or 2-complex ')
+        quality = input('Choose quality of test (1-simple) or 2-complex ')
         if int(quality) == 2:
             self.quality = self.QUALITY_OF_TEST_COMPLEX
             changed = True
-        first = raw_input('Enter variants for first element (1-12) ')
+        first = input('Enter variants for first element (1-12) ')
         skip_second = False
         if len(first.strip()) > 0:
             tmp = []
@@ -80,7 +80,7 @@ class TaskMaker(object):
             changed = True
             skip_second = True
         if not skip_second:
-            second = raw_input('Enter variants for second element (1-12) ')
+            second = input('Enter variants for second element (1-12) ')
             if len(second.strip()) > 0:
                 tmp = []
                 for digital in tuple(second.strip().split(',')):
@@ -89,14 +89,14 @@ class TaskMaker(object):
             elif self.quality == self.QUALITY_OF_TEST_COMPLEX:
                 self.second = self.complex_set
             changed = True
-        operations = raw_input('Enter list operation (sum, sub, div, mul) ')
+        operations = input('Enter list operation (sum, sub, div, mul) ')
         if len(operations.strip()) > 0:
             tmp = []
             for symbol in tuple(operations.strip().split(',')):
                 if symbol in Exercise.LIST_OPERATIONS:
                     tmp.append(symbol)
                 else:
-                    print 'Operation {:s} changed by sum'.format(symbol)
+                    print('Operation {:s} changed by sum'.format(symbol))
                     tmp.append('sum')
             if len(tmp) == 1:
                 tmp *= 4
@@ -160,6 +160,7 @@ class TaskMaker(object):
         else:
             for_ret = random.randint(1, 3)
         return for_ret
+
     def check_repeat(self, exercise, column_index):
         """
         :param exercise: Exercise
@@ -204,8 +205,7 @@ class TaskMaker(object):
         :return: string
         """
         return self.strLeftMargin[:-1] + self.title + 'date ' + datetime.datetime.now().strftime(
-            '%Y-%m-%d ') + self.learner + ' (' + \
-               self.quality + ')'
+            '%Y-%m-%d ') + self.learner + ' (' + self.quality + ')'
 
     def set_title(self, title=u'Trace d\'etude '):
         self.title = title
@@ -216,11 +216,11 @@ class TaskMaker(object):
         """
         if len(self.rows) == 0:
             self.generate()
-        print self.get_title()
+        print(self.get_title())
         for row in self.rows:
-            print self.blankLine
-            print self.row_to_sting(row)
-        print self.blankLine
+            print(self.blankLine)
+            print(self.row_to_sting(row))
+        print(self.blankLine)
 
     def to_file(self, name_of_file='task_to_print'):
         """
@@ -238,4 +238,4 @@ class TaskMaker(object):
 
 
 if __name__ == '__main__':
-    print 'Hi, It is ' + __file__ + ' project ' + __project__ + ' by ' + __author__
+    print('Hi, It is', __file__, 'project', __project__, 'by', __author__)

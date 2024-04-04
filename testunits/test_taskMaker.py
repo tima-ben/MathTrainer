@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 from unittest import TestCase
 
-__author__ = 'Eduard Balantsev'
-__project__ = 'MathTrainer'
+__author__: str = 'Eduard Balantsev'
+__project__: str = 'MathTrainer'
 
 
 class TestTaskMaker(TestCase):

@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-__author__ = 'Eduard Balantsev'
-__project__ = 'MathTrainer'
+__author__: str = 'Eduard Balantsev'
+__project__: str = 'MathTrainer'
 
 
 class Exercise(object):
@@ -23,7 +23,7 @@ class Exercise(object):
     singleOperation = {'sum': u'+', 'sub': u'-', 'div': u'\xf7', 'mul': u'\xd7'}
 
     def __init__(self, a=0, b=0, operation='sum'):
-        """ constructor for Exercise
+        """ constructor
         :type self: Exercise :type a: integer :type b integer :type operation basestring
         """
         if operation in self.LIST_OPERATIONS:
@@ -35,25 +35,26 @@ class Exercise(object):
             self.a = a
             self.b = b
             if operation == 'sum':
-                self.result = self.a+self.b
+                self.result = self.a + self.b
             else:
-                self.result = self.a*self.b
+                self.result = self.a * self.b
         elif operation == 'sub':
-            self.result = a-1
+            self.result = a - 1
             self.a = self.result + b
             self.b = b
         else:
-            self.a = a*b
+            self.a = a * b
             self.b = b
-            self.result = self.a/self.b
-        self.a_str = '{:^3}'.format(self.a,)
-        self.b_str = '{:^3}'.format(self.b,)
-        self.result_str = '{:^3}'.format(self.result,)
+            self.result = self.a / self.b
+        self.a_str = '{:^3}'.format(self.a, )
+        self.b_str = '{:^3}'.format(self.b, )
+        self.result_str = '{:^3}'.format(self.result, )
         self.create = True
         self.list_for_out = (self.a_str, self.singleOperation[self.operation], self.b_str, self.result_str)
 
     def for_out(self, hide=OUT_FORMAT_HIDE_RESULT):
         return self.OUT_FORMAT_LIST[hide].format(self.list_for_out)
 
+
 if __name__ == '__main__':
-    print 'Hi, It is '+__file__+' project '+__project__+' by '+__author__
+    print('Hi, It is', __file__, 'project', __project__, 'by', __author__)

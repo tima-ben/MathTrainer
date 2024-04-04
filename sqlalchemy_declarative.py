@@ -20,7 +20,7 @@ class MLearner(Base):
     # Here we define columns for the table learner
     # Notice that each column is also a normal Python instance attribute.
 
-    __tablename__ = 'learner'
+    __tablename__: str = 'learner'
     id_learner = Column(Integer, primary_key=True, autoincrement=True)
     login = Column(String(32), nullable=False)
     name = Column(String(32), nullable=False)
@@ -47,7 +47,7 @@ class MExercise(Base):
 engine = create_engine('sqlite:///db_sqlite3/math_trainer.db')
 
 if __name__ == '__main__':
-    print 'Hi, It is ' + __file__ + ' project ' + __project__ + ' by ' + __author__
+    print('Hi, It is', __file__, 'project', __project__, 'by', __author__)
     # Create all tables in the engine. This is equivalent to "Create Table"
     # statements in raw SQL.
     Base.metadata.create_all(engine)

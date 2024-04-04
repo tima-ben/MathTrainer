@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-__author__ = 'Eduard Balantsev'
-__project__ = 'MathTrainer'
+__author__: str = 'Eduard Balantsev'
+__project__: str = 'MathTrainer'
 
 from unittest import TestCase
 from unittest import main
@@ -129,5 +129,5 @@ class TestExercise(TestCase):
 
 
 if __name__ == '__main__':
-    print 'Hi, It is ' + __file__ + ' project ' + __project__ + ' by ' + __author__
+    print('Hi, It is', __file__, 'project', __project__, 'by', __author__)
     main()
