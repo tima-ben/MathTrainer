@@ -4,8 +4,10 @@ __author__: str = 'Eduard Balantsev'
 __project__: str = 'MathTrainer'
 
 import io
+import os
 import random
 import datetime
+from os import linesep as EOL
 from Exercise import Exercise
 
 
@@ -15,6 +17,7 @@ class TaskMaker(object):
     """
     COUNT_ROW = 12
     COUNT_COLUMN = 4
+    DEFAULT_LEARNER_NAME: str = 'Guest'
     LEFT_MARGIN = 8
     TYPE_OF_TEST_CONSOLIDATION = 'consolidation'
     TYPE_OF_TEST_EDUCATION = 'education'
@@ -26,17 +29,17 @@ class TaskMaker(object):
                      TYPE_OF_TEST_CHECKING)
     QUALITY_OF_TEST_SIMPLE = 'simple'
     QUALITY_OF_TEST_COMPLEX = 'complex'
-    strLeftMargin = u' ' * LEFT_MARGIN + '|'
-    blankLine = strLeftMargin + u'----------------+' * COUNT_COLUMN
-    title = u'Test for '
-    name_learner = {'1': u'Timur Balantsev', '2': 'Arina Balantseva'}
+    strLeftMargin = ' ' * LEFT_MARGIN + '|'
+    blankLine = ' ' * LEFT_MARGIN + '+' + '----------------+' * COUNT_COLUMN
+    title = 'Test for '
+    name_learner = {'1': 'Timur Balantsev', '2': 'Arina Balantseva'}
     defaultSet = True
     simple_set = (2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12)
     complex_set = (2, 3, 4, 6, 7, 8, 9, 12)
     quality = QUALITY_OF_TEST_SIMPLE
     rows = []
 
-    def __init__(self, learner='Guest', type_of_test=TYPE_OF_TEST_CONSOLIDATION,
+    def __init__(self, learner=DEFAULT_LEARNER_NAME, type_of_test=TYPE_OF_TEST_CONSOLIDATION,
                  first=range(1, 12), second=range(1, 12),
                  operations=Exercise.LIST_OPERATIONS, set_info=False):
         self.learner = learner
@@ -58,7 +61,8 @@ class TaskMaker(object):
         changed = False
         self.first = self.simple_set
         self.second = self.simple_set
-        name = input('Enter learner name: 1-Timur or 2-Arina or (Guest) or name ')
+        print('Note:' + EOL, 'The value in (<val>) will be the default value.')
+        name = input('Enter learner name: 1-Timur or 2-Arina or (Guest) or name ') or self.learner
         if len(name) == 1:
             if type(self.name_learner[name]) is not None:
                 self.learner = self.name_learner[name]
@@ -66,7 +70,7 @@ class TaskMaker(object):
         elif len(name) > 1:
             self.learner = name
             changed = True
-        quality = input('Choose quality of test (1-simple) or 2-complex ')
+        quality = input('Choose quality of test (1-simple) or 2-complex ') or 1
         if int(quality) == 2:
             self.quality = self.QUALITY_OF_TEST_COMPLEX
             changed = True

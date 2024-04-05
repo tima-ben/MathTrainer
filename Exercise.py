@@ -9,18 +9,18 @@ class Exercise(object):
     """
     LIST_OPERATIONS = ('sum', 'sub', 'div', 'mul')
     DEFAULT_OPERATION = 'sum'
-    OUT_FORMAT_LIST = (u' {0[0]:s} {0[1]:s} {0[2]:s} ={0[3]:s}',
-                       u' {0[0]:s} {0[1]:s} {0[2]:s} =   ',
-                       u' {0[0]:s} {0[1]:s}     ={0[3]:s}',
-                       u'     {0[1]:s} {0[2]:s} ={0[3]:s}',
-                       u' {0[0]:s}   {0[2]:s} ={0[3]:s}')
+    OUT_FORMAT_LIST = (' {0[0]:s} {0[1]:s} {0[2]:s} ={0[3]:s}',
+                       ' {0[0]:s} {0[1]:s} {0[2]:s} =   ',
+                       ' {0[0]:s} {0[1]:s}     ={0[3]:s}',
+                       '     {0[1]:s} {0[2]:s} ={0[3]:s}',
+                       ' {0[0]:s}   {0[2]:s} ={0[3]:s}')
     OUT_FORMAT_FULL = 0
     OUT_FORMAT_HIDE_RESULT = 1
     OUT_FORMAT_HIDE_B = 2
     OUT_FORMAT_HIDE_A = 3
     OUT_FORMAT_HIDE_OPERATION = 4
     create = False
-    singleOperation = {'sum': u'+', 'sub': u'-', 'div': u'\xf7', 'mul': u'\xd7'}
+    singleOperation = {'sum': '+', 'sub': '-', 'div': '\xf7', 'mul': '\xd7'}
 
     def __init__(self, a=0, b=0, operation='sum'):
         """ constructor
@@ -39,13 +39,13 @@ class Exercise(object):
             else:
                 self.result = self.a * self.b
         elif operation == 'sub':
-            self.result = a - 1
+            self.result = a
             self.a = self.result + b
             self.b = b
         else:
             self.a = a * b
             self.b = b
-            self.result = self.a / self.b
+            self.result = int(self.a / self.b)
         self.a_str = '{:^3}'.format(self.a, )
         self.b_str = '{:^3}'.format(self.b, )
         self.result_str = '{:^3}'.format(self.result, )

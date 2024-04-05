@@ -18,6 +18,6 @@ if __name__ == '__main__':
     test.type_of_test = test.TYPE_OF_TEST_VERIFICATION
     test.to_screen()
     time_end = datetime.datetime.now()
-    print (time_start.microsecond)
+    print(time_start.microsecond)
     print('start script:', time_start)
     print('end script:', time_end, 'work time', (time_end - time_start))
