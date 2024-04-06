@@ -7,7 +7,9 @@ import io
 import os
 import random
 import datetime
-from os import linesep as EOL
+from os import linesep as eol
+from typing import Tuple, Dict, List, Any
+
 from Exercise import Exercise
 
 
@@ -15,42 +17,51 @@ class TaskMaker(object):
     """
 
     """
-    COUNT_ROW = 12
-    COUNT_COLUMN = 4
+    COUNT_ROW: int = 12
+    COUNT_COLUMN: int = 4
     DEFAULT_LEARNER_NAME: str = 'Guest'
-    LEFT_MARGIN = 8
-    TYPE_OF_TEST_CONSOLIDATION = 'consolidation'
-    TYPE_OF_TEST_EDUCATION = 'education'
-    TYPE_OF_TEST_VERIFICATION = 'verification'
-    TYPE_OF_TEST_CHECKING = 'checking'
-    TYPE_OF_TESTS = (TYPE_OF_TEST_CONSOLIDATION,
-                     TYPE_OF_TEST_EDUCATION,
-                     TYPE_OF_TEST_VERIFICATION,
-                     TYPE_OF_TEST_CHECKING)
-    QUALITY_OF_TEST_SIMPLE = 'simple'
-    QUALITY_OF_TEST_COMPLEX = 'complex'
-    strLeftMargin = ' ' * LEFT_MARGIN + '|'
-    blankLine = ' ' * LEFT_MARGIN + '+' + '----------------+' * COUNT_COLUMN
-    title = 'Test for '
-    name_learner = {'1': 'Timur Balantsev', '2': 'Arina Balantseva'}
-    defaultSet = True
-    simple_set = (2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12)
-    complex_set = (2, 3, 4, 6, 7, 8, 9, 12)
+    LEFT_MARGIN: int = 8
+    TYPE_OF_TEST_CONSOLIDATION: str = 'consolidation'
+    TYPE_OF_TEST_EDUCATION: str = 'education'
+    TYPE_OF_TEST_VERIFICATION: str = 'verification'
+    TYPE_OF_TEST_CHECKING: str = 'checking'
+    TYPE_OF_TESTS: tuple[str, str, str, str] = (TYPE_OF_TEST_CONSOLIDATION,
+                                                TYPE_OF_TEST_EDUCATION,
+                                                TYPE_OF_TEST_VERIFICATION,
+                                                TYPE_OF_TEST_CHECKING)
+    QUALITY_OF_TEST_SIMPLE: str = 'simple'
+    QUALITY_OF_TEST_COMPLEX: str = 'complex'
+    strLeftMargin: str = ' ' * LEFT_MARGIN + '|'
+    blankLine: str = ' ' * LEFT_MARGIN + '+' + '----------------+' * COUNT_COLUMN
+    title: str = 'Test for '
+    name_learner: dict[str, str] = {'1': 'Timur Balantsev', '2': 'Arina Balantseva'}
+    defaultSet: bool = True
+    simple_set: tuple[int, int, int, int, int, int, int, int, int, int, int] = (2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12)
+    complex_set: tuple[int, int, int, int, int, int, int, int] = (2, 3, 4, 6, 7, 8, 9, 12)
     quality = QUALITY_OF_TEST_SIMPLE
-    rows = []
+    rows: list[Any] = []
 
-    def __init__(self, learner=DEFAULT_LEARNER_NAME, type_of_test=TYPE_OF_TEST_CONSOLIDATION,
-                 first=range(1, 12), second=range(1, 12),
-                 operations=Exercise.LIST_OPERATIONS, set_info=False):
-        self.learner = learner
+    def __init__(self, learner: str = DEFAULT_LEARNER_NAME, type_of_test: str = TYPE_OF_TEST_CONSOLIDATION,
+                 first: range = range(1, 12), second: range = range(1, 12),
+                 operations: tuple[str, str, str, str] = Exercise.LIST_OPERATIONS, set_info: bool = False):
+        """
+
+        :param learner:
+        :param type_of_test:
+        :param first:
+        :param second:
+        :param operations:
+        :param set_info:
+        """
+        self.learner: str = learner
         if type_of_test in self.TYPE_OF_TESTS:
-            self.type_of_test = type_of_test
+            self.type_of_test: str = type_of_test
         else:
             raise Exception(
                 'Type of test: \'%s\' not correct. it can be %s' % (type_of_test, self.TYPE_OF_TESTS.__str__()))
-        self.first = first
-        self.second = second
-        self.operations = operations
+        self.first: range = first
+        self.second: range = second
+        self.operations: tuple[str, str, str, str] = operations
         if set_info:
             self.set_info()
 
@@ -58,11 +69,11 @@ class TaskMaker(object):
         """
         Get information about leaner and task from command line and set it for task
         """
-        changed = False
+        changed: bool = False
         self.first = self.simple_set
         self.second = self.simple_set
-        print('Note:' + EOL, 'The value in (<val>) will be the default value.')
-        name = input('Enter learner name: 1-Timur or 2-Arina or (Guest) or name? ') or self.learner
+        print('Note:' + eol, 'The value in (<val>) will be the default value.')
+        name: str = input('Enter learner name: 1-Timur or 2-Arina or (Guest) or name? ') or self.learner
         if len(name) == 1:
             if type(self.name_learner[name]) is not None:
                 self.learner = self.name_learner[name]
@@ -70,32 +81,33 @@ class TaskMaker(object):
         elif len(name) > 1:
             self.learner = name
             changed = True
-        quality = input('Choose quality of test (1-simple) or 2-complex? ') or 1
+        quality: str = input('Choose quality of test (1-simple) or 2-complex? ') or '1'
         if int(quality) == 2:
             self.quality = self.QUALITY_OF_TEST_COMPLEX
             changed = True
-        first = input('Enter variants for first element (1-12)? ')
-        skip_second = False
+        first: str = input('Enter variants for first element (1-12)? ')
+        skip_second: bool = False
         if len(first.strip()) > 0:
-            tmp = []
+            tmp: list[int] = []
             for digital in tuple(first.strip().split(',')):
                 tmp.append(int(digital))
             self.first = tuple(tmp)
             changed = True
             skip_second = True
         if not skip_second:
-            second = input('Enter variants for second element (1-12)? ')
+            second: str = input('Enter variants for second element (1-12)? ')
             if len(second.strip()) > 0:
-                tmp = []
+                tmp: list[int] = []
                 for digital in tuple(second.strip().split(',')):
                     tmp.append(int(digital))
                 self.second = tuple(tmp)
             elif self.quality == self.QUALITY_OF_TEST_COMPLEX:
                 self.second = self.complex_set
             changed = True
-        operations = input('Enter list operation (sum, sub, div, mul)? ')
+        operations: str = input('Enter list operation (sum, sub, div, mul)? ')
         if len(operations.strip()) > 0:
-            tmp = []
+            tmp: list[str] = []
+            symbol: str
             for symbol in tuple(operations.strip().split(',')):
                 if symbol in Exercise.LIST_OPERATIONS:
                     tmp.append(symbol)
@@ -111,7 +123,7 @@ class TaskMaker(object):
             self.operations = tuple(tmp)
             changed = True
 
-        self.defaultSet = not changed
+        self.defaultSet: bool = not changed
 
     def get_first(self, row):
         """
@@ -226,18 +238,18 @@ class TaskMaker(object):
             print(self.row_to_sting(row))
         print(self.blankLine)
 
-    def to_file(self, name_of_file='task_to_print'):
+    def to_file(self, name_of_file: str = 'task_to_print') -> None:
         """
 
-        :param name_of_file: string
-        :return:
+        :param name_of_file: str
+        :return: None
         """
         f = io.open(name_of_file, 'w', encoding='utf-8')
-        f.write(self.get_title() + '\n')
+        f.write(self.get_title() + eol)
         for row in self.rows:
-            f.write(self.blankLine + '\n')
-            f.write(self.row_to_sting(row) + '\n')
-        f.write(self.blankLine + '\n')
+            f.write(self.blankLine + eol)
+            f.write(self.row_to_sting(row) + eol)
+        f.write(self.blankLine + eol)
         f.close()
 
 
