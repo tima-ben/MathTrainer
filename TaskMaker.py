@@ -62,7 +62,7 @@ class TaskMaker(object):
         self.first = self.simple_set
         self.second = self.simple_set
         print('Note:' + EOL, 'The value in (<val>) will be the default value.')
-        name = input('Enter learner name: 1-Timur or 2-Arina or (Guest) or name ') or self.learner
+        name = input('Enter learner name: 1-Timur or 2-Arina or (Guest) or name? ') or self.learner
         if len(name) == 1:
             if type(self.name_learner[name]) is not None:
                 self.learner = self.name_learner[name]
@@ -70,11 +70,11 @@ class TaskMaker(object):
         elif len(name) > 1:
             self.learner = name
             changed = True
-        quality = input('Choose quality of test (1-simple) or 2-complex ') or 1
+        quality = input('Choose quality of test (1-simple) or 2-complex? ') or 1
         if int(quality) == 2:
             self.quality = self.QUALITY_OF_TEST_COMPLEX
             changed = True
-        first = input('Enter variants for first element (1-12) ')
+        first = input('Enter variants for first element (1-12)? ')
         skip_second = False
         if len(first.strip()) > 0:
             tmp = []
@@ -84,7 +84,7 @@ class TaskMaker(object):
             changed = True
             skip_second = True
         if not skip_second:
-            second = input('Enter variants for second element (1-12) ')
+            second = input('Enter variants for second element (1-12)? ')
             if len(second.strip()) > 0:
                 tmp = []
                 for digital in tuple(second.strip().split(',')):
@@ -93,7 +93,7 @@ class TaskMaker(object):
             elif self.quality == self.QUALITY_OF_TEST_COMPLEX:
                 self.second = self.complex_set
             changed = True
-        operations = input('Enter list operation (sum, sub, div, mul) ')
+        operations = input('Enter list operation (sum, sub, div, mul)? ')
         if len(operations.strip()) > 0:
             tmp = []
             for symbol in tuple(operations.strip().split(',')):
