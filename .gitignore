@@ -1,2 +1,5 @@
 # add files for PyCharm
 .idea
+.env
+!./data/.gitignore
+./data/*

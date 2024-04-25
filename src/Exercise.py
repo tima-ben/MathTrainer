@@ -43,16 +43,17 @@ class Exercise(object):
         self.b: int = 0
         self.result: int = 0
         if operation == self.OPERATION_SUM or operation == self.OPERATION_MUL:
-            self.a = a
-            self.b = b
+            self.a, self.b = a, b
             if operation == self.OPERATION_SUM:
                 self.result = self.a + self.b
             else:
                 self.result = self.a * self.b
         elif operation == self.OPERATION_SUB:
-            self.result = a
-            self.a = self.result + b
+            if a < b:
+                a, b = b, a
+            self.a = a
             self.b = b
+            self.result = self.a - self.b
         else:
             self.a = a * b
             self.b = b
