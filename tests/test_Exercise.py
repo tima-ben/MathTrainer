@@ -3,9 +3,9 @@
 __author__: str = 'Eduard Balantsev'
 __project__: str = 'MathTrainer'
 
-from unittest import TestCase
-from unittest import main
-from Exercise import Exercise
+from unittest import TestCase, main
+from os import linesep as eol, path
+from src.Exercise import Exercise
 
 
 class TestExercise(TestCase):
@@ -13,7 +13,7 @@ class TestExercise(TestCase):
     def setUp(self):
         self.s = Exercise()
         self.sub = Exercise(6, 1, 'sub')
-        self.sub1 = Exercise(1, 6, 'sub')
+        self.sub1 = Exercise(6, 6, 'sub')
         self.mul = Exercise(2, 6, 'mul')
         self.div = Exercise(2, 6, 'div')
 
@@ -91,43 +91,54 @@ class TestExercise(TestCase):
         self.assertEqual(self.sub1.create, True, 'obj.create by default equal True')
 
     def test_for_out(self):
-        self.assertEqual(self.s.for_out(), '  0  +  0  =   ', 'obj.for_out() returned "'+self.s.for_out()+'"')
-        self.assertEqual(self.s.for_out(0), '  0  +  0  = 0 ', 'obj.for_out(0) returned "'+self.s.for_out(0)+'"')
-        self.assertEqual(self.s.for_out(2), '  0  +     = 0 ', 'obj.for_out(2) returned "'+self.s.for_out(2)+'"')
-        self.assertEqual(self.s.for_out(3), '     +  0  = 0 ', 'obj.for_out(3) returned "'+self.s.for_out(3)+'"')
-        self.assertEqual(self.s.for_out(4), '  0     0  = 0 ', 'obj.for_out(4) returned "'+self.s.for_out(4)+'"')
-        self.assertEqual(self.sub.for_out(), '  6  -  1  =   ', 'obj.for_out() returned "'+self.sub.for_out()+'"')
-        self.assertEqual(self.sub.for_out(0), '  6  -  1  = 5 ', 'obj.for_out(0) returned "'+self.sub.for_out(0)+'"')
-        self.assertEqual(self.sub.for_out(2), '  6  -     = 5 ', 'obj.for_out(2) returned "'+self.sub.for_out(2)+'"')
-        self.assertEqual(self.sub.for_out(3), '     -  1  = 5 ', 'obj.for_out(3) returned "'+self.sub.for_out(3)+'"')
-        self.assertEqual(self.sub.for_out(4), '  6     1  = 5 ', 'obj.for_out(4) returned "'+self.sub.for_out(4)+'"')
-        self.assertEqual(self.sub1.for_out(), '  6  -  6  =   ', 'obj.for_out() returned "'+self.sub1.for_out()+'"')
-        self.assertEqual(self.sub1.for_out(0), '  6  -  6  = 0 ', 'obj.for_out(0) returned "'+self.sub1.for_out(0)+'"')
-        self.assertEqual(self.sub1.for_out(2), '  6  -     = 0 ', 'obj.for_out(2) returned "'+self.sub1.for_out(2)+'"')
-        self.assertEqual(self.sub1.for_out(3), '     -  6  = 0 ', 'obj.for_out(3) returned "'+self.sub1.for_out(3)+'"')
-        self.assertEqual(self.sub1.for_out(4), '  6     6  = 0 ', 'obj.for_out(4) returned "'+self.sub1.for_out(4)+'"')
-        self.assertEqual(self.mul.for_out(), '  2  ' + u'\xd7' + '  6  =   ', 'obj.for_out() returned "'
-                         + self.mul.for_out()+'"')
-        self.assertEqual(self.mul.for_out(0), '  2  ' + u'\xd7' + '  6  =12 ', 'obj.for_out(0) returned "'
-                         + self.mul.for_out(0)+'"')
-        self.assertEqual(self.mul.for_out(2), '  2  ' + u'\xd7' + '     =12 ', 'obj.for_out(2) returned "'
-                         + self.mul.for_out(2)+'"')
-        self.assertEqual(self.mul.for_out(3), '     ' + u'\xd7' + '  6  =12 ', 'obj.for_out(3) returned "'
-                         + self.mul.for_out(3)+'"')
+        self.assertEqual(self.s.for_out(), '  0  +  0  =   ', 'obj.for_out() returned "' + self.s.for_out() + '"')
+        self.assertEqual(self.s.for_out(0), '  0  +  0  = 0 ', 'obj.for_out(0) returned "' + self.s.for_out(0) + '"')
+        self.assertEqual(self.s.for_out(2), '  0  +     = 0 ', 'obj.for_out(2) returned "' + self.s.for_out(2) + '"')
+        self.assertEqual(self.s.for_out(3), '     +  0  = 0 ', 'obj.for_out(3) returned "' + self.s.for_out(3) + '"')
+        self.assertEqual(self.s.for_out(4), '  0     0  = 0 ', 'obj.for_out(4) returned "' + self.s.for_out(4) + '"')
+        self.assertEqual(self.sub.for_out(), '  6  -  1  =   ', 'obj.for_out() returned "' + self.sub.for_out() + '"')
+        self.assertEqual(self.sub.for_out(0), '  6  -  1  = 5 ',
+                         'obj.for_out(0) returned "' + self.sub.for_out(0) + '"')
+        self.assertEqual(self.sub.for_out(2), '  6  -     = 5 ',
+                         'obj.for_out(2) returned "' + self.sub.for_out(2) + '"')
+        self.assertEqual(self.sub.for_out(3), '     -  1  = 5 ',
+                         'obj.for_out(3) returned "' + self.sub.for_out(3) + '"')
+        self.assertEqual(self.sub.for_out(4), '  6     1  = 5 ',
+                         'obj.for_out(4) returned "' + self.sub.for_out(4) + '"')
+        self.assertEqual(self.sub1.for_out(), '  6  -  6  =   ', 'obj.for_out() returned "' + self.sub1.for_out() + '"')
+        self.assertEqual(self.sub1.for_out(0), '  6  -  6  = 0 ',
+                         'obj.for_out(0) returned "' + self.sub1.for_out(0) + '"')
+        self.assertEqual(self.sub1.for_out(2), '  6  -     = 0 ',
+                         'obj.for_out(2) returned "' + self.sub1.for_out(2) + '"')
+        self.assertEqual(self.sub1.for_out(3), '     -  6  = 0 ',
+                         'obj.for_out(3) returned "' + self.sub1.for_out(3) + '"')
+        self.assertEqual(self.sub1.for_out(4), '  6     6  = 0 ',
+                         'obj.for_out(4) returned "' + self.sub1.for_out(4) + '"')
+        single = Exercise.singleOperation['mul']
+        self.assertEqual(self.mul.for_out(), '  2  ' + single + '  6  =   ', 'obj.for_out() returned "'
+                         + self.mul.for_out() + '"')
+        self.assertEqual(self.mul.for_out(0), '  2  ' + single + '  6  =12 ', 'obj.for_out(0) returned "'
+                         + self.mul.for_out(0) + '"')
+        self.assertEqual(self.mul.for_out(2), '  2  ' + single + '     =12 ', 'obj.for_out(2) returned "'
+                         + self.mul.for_out(2) + '"')
+        self.assertEqual(self.mul.for_out(3), '     ' + single + '  6  =12 ', 'obj.for_out(3) returned "'
+                         + self.mul.for_out(3) + '"')
         self.assertEqual(self.mul.for_out(4), '  2     6  =12 ', 'obj.for_out(4) returned "'
-                         + self.mul.for_out(4)+'"')
-        self.assertEqual(self.div.for_out(), ' 12  ' + u'\xf7' + '  6  =   ', 'obj.for_out() returned "'
+                         + self.mul.for_out(4) + '"')
+        single = Exercise.singleOperation['div']
+        self.assertEqual(self.div.for_out(), ' 12  ' + single + '  6  =   ', 'obj.for_out() returned "'
                          + self.div.for_out() + '"')
-        self.assertEqual(self.div.for_out(0), ' 12  ' + u'\xf7' + '  6  = 2 ', 'obj.for_out(0) returned "'
+        self.assertEqual(self.div.for_out(0), ' 12  ' + single + '  6  = 2 ', 'obj.for_out(0) returned "'
                          + self.div.for_out(0) + '"')
-        self.assertEqual(self.div.for_out(2), ' 12  ' + u'\xf7' + '     = 2 ', 'obj.for_out(2) returned "'
+        self.assertEqual(self.div.for_out(2), ' 12  ' + single + '     = 2 ', 'obj.for_out(2) returned "'
                          + self.div.for_out(2) + '"')
-        self.assertEqual(self.div.for_out(3), '     ' + u'\xf7' + '  6  = 2 ', 'obj.for_out(3) returned "'
+        self.assertEqual(self.div.for_out(3), '     ' + single + '  6  = 2 ', 'obj.for_out(3) returned "'
                          + self.div.for_out(3) + '"')
         self.assertEqual(self.div.for_out(4), ' 12     6  = 2 ', 'obj.for_out(4) returned "'
                          + self.div.for_out(4) + '"')
 
 
 if __name__ == '__main__':
-    print('Hi, It is', __file__, 'project', __project__, 'by', __author__)
+    print('Hello', eol, 'It is file:', path.basename(__file__), eol, 'Project:', __project__, eol, 'Created by:',
+          __author__, eol, '='*20, eol, 'Unit Test for class Exercise', eol, '='*20)
     main()
