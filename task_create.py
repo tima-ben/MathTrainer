@@ -3,7 +3,7 @@
 __author__: str = 'Eduard Balantsev'
 __project__: str = 'MathTrainer'
 import datetime
-from TaskMaker import TaskMaker
+from src.TaskMaker import TaskMaker
 
 if __name__ == '__main__':
     time_start = datetime.datetime.now()
